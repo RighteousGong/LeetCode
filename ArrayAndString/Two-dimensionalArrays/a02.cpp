@@ -12,6 +12,39 @@
 
 void setZeroes(std::vector<std::vector<int>>& matrix);
 
+int main(){
+    std::vector<std::vector<int>> matrix = {{0,1,2,0},{3,4,5,2},{1,3,1,5}};
+    setZeroes(matrix);
+    for(int i = 0; i < matrix.size(); ++ i){
+        for (int j = 0; j < matrix[0].size(); ++j){
+            std::cout << matrix[i][j] << " ";
+        }
+        std::cout<< std::endl;
+    }
+}
+
+/*
+用int row[matrix.size()];int column[matrix[0].size()];的缺点
+未初始化数组：C++中的局部数组row和column没有默认初始化值，可能包含随机垃圾值，这会导致不正确的结果。
+数组的使用：如果矩阵的尺寸为零，这会导致数组定义错误。
+代码不使用标准库的最佳实践：C++标准库提供的std::vector更安全，并且可以避免手动管理内存。
+*/
 void setZeroes(std::vector<std::vector<int>>& matrix) {
-    int len = matrix.size();
+    std::vector<bool> row(matrix.size());
+    std::vector<bool> column(matrix[0].size());
+    for(int i = 0; i < matrix.size(); ++ i){
+        for (int j = 0; j < matrix[0].size(); ++ j){
+            if (matrix[i][j] == 0){
+                row[i] = true;
+                column[j] = true;
+            }
+        }
+    }
+    for(int i = 0; i < matrix.size(); ++ i){
+        for (int j = 0; j < matrix[0].size(); ++ j){
+            if (row[i] || column[j]){
+                matrix[i][j] = 0;
+            }
+        }
+    }
 }
